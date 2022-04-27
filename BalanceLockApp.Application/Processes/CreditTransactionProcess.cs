@@ -12,6 +12,11 @@ namespace BalanceLockApp.Application.Processes
     public class CreditTransactionProcess : ITransactionProcess
     {
         private IAccountRepository accountRepository;
+
+        public CreditTransactionProcess(IAccountRepository accountRepository)
+        {
+            this.accountRepository = accountRepository;
+        }
         public void Process(int accountNumber, decimal amount)
         {
             Validation(accountNumber, amount);

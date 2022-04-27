@@ -14,7 +14,15 @@ namespace BalanceLockApp.Infrastructure.Repositories
 
         public AccountRepository()
         {
-            accounts = new List<Account>();
+            accounts = new List<Account>()
+            {
+                new Account()
+                {
+                    AccountNumber = 123,
+                    Balance = 1000,
+                    Id = 1
+                }
+            };
         }
         public void Create(Account t)
         {

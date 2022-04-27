@@ -1,6 +1,8 @@
-﻿using BalanceLockApp.Application.Interfaces;
+﻿using BalanceLockApp.Application.Factories;
+using BalanceLockApp.Application.Interfaces;
 using BalanceLockApp.Domain.Entities;
 using BalanceLockApp.Domain.Enums;
+using BalanceLockApp.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,30 +13,69 @@ namespace BalanceLockApp.Application.Services
 {
     public class AccountService : IAccountService
     {
+        private IAccountRepository accountRepository;
+
+        public AccountService(IAccountRepository accountRepository)
+        {
+            this.accountRepository = accountRepository;
+        }
 
         public void Create(Account t)
         {
-            throw new NotImplementedException();
+            try
+            {
+                accountRepository.Create(t);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public void CreateTransaction(int accountNumber, decimal amount, TransactionType transactionType)
         {
-            throw new NotImplementedException();
+            TransactionProcessFactory.CreateInstance(transactionType, accountRepository).Process(accountNumber,amount);
         }
 
         public List<Account> GetAll()
         {
-            throw new NotImplementedException();
+            try
+            {
+                return accountRepository.GetAll();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            
         }
 
-        public Account GetByAccountNumber(int accountNumber0)
+        public Account GetByAccountNumber(int accountNumber)
         {
-            throw new NotImplementedException();
+            Account account = null;
+            try
+            {
+                account = accountRepository.GetByAccountNumber(accountNumber);
+                return account;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public int Update(Account t)
         {
-            throw new NotImplementedException();
+            int rowAffected = 0;
+            try
+            {
+                rowAffected = accountRepository.Update(t);
+                return rowAffected;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

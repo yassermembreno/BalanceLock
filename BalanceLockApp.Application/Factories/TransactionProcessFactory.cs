@@ -1,6 +1,7 @@
 ﻿using BalanceLockApp.Application.Interfaces;
 using BalanceLockApp.Application.Processes;
 using BalanceLockApp.Domain.Enums;
+using BalanceLockApp.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,14 +12,14 @@ namespace BalanceLockApp.Application.Factories
 {
     public class TransactionProcessFactory
     {
-        public static ITransactionProcess CreateInstance(TransactionType transactionType)
+        public static ITransactionProcess CreateInstance(TransactionType transactionType, IAccountRepository accountRepository)
         {
             switch (transactionType)
             {
                 case TransactionType.Debit:
-                    return new DebitTransactionProcess();
+                    return new DebitTransactionProcess(accountRepository);
                 case TransactionType.Credit:
-                    return null;
+                    return new CreditTransactionProcess(accountRepository);
                 default:
                     throw new Exception("Transaction Type does not exists.");
             }

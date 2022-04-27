@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace BalanceLockApp
+namespace BalanceLock.Presenter
 {
     public partial class Form1 : Form
     {
@@ -19,15 +19,15 @@ namespace BalanceLockApp
         {
             this.accountService = accountService;
             InitializeComponent();
-        }
+        }    
 
-        private void Button1_Click(object sender, EventArgs e)
+        private void BtnTest_Click(object sender, EventArgs e)
         {
-            List<decimal> amounts = new List<decimal>(){ 100M, 20, 1000M, 300M, };
+            List<decimal> amounts = new List<decimal>() { 100M, 20, 1000M, 300M, };
             int i = 1;
-            foreach(decimal value in amounts)
+            foreach (decimal value in amounts)
             {
-                if(i%2 == 1)
+                if (i % 2 == 1)
                 {
                     Task.Run(() =>
                     {
@@ -41,9 +41,8 @@ namespace BalanceLockApp
                         accountService.CreateTransaction(123, value, TransactionType.Debit);
                     });
                 }
-                
+
             }
-           
         }
     }
 }

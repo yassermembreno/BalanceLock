@@ -10,7 +10,19 @@ namespace BalanceLockApp.Domain.Entities
     {
         public int Id { get; set; }
         public int AccountNumber { get; set; }
-        public decimal Balance { get; set; }
+        private decimal balance;
+        private object balanceLock = new object();
+        public decimal Balance {
+            get {
+                return this.balance;
+            }
+            set {
+                lock (balanceLock)
+                { 
+                    balance = value;
+                }
+            }
+        }
         public Customer Customer { get; set; }
         
     }
